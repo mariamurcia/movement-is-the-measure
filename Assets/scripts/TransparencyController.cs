@@ -7,10 +7,6 @@ public class TransparencyController : MonoBehaviour {
     public GameObject avatarComponent;
     public float thresholdDistance = 1f;
     public float offset = 0.2f;
-
-    void Start () {
-		
-	}
 	
 	void Update () {
         var colour = this.GetComponent<MeshRenderer>().material.color;
