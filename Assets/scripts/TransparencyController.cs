@@ -1,4 +1,11 @@
-﻿using System.Collections;
+﻿/*
+ * TransparencyController.cs
+ * Changes transparency of the material of the gameObject it is attached to depending on the distance between this gameObject and the selected avatarComponent
+ * Author: Sebastian Friston, Maria Murcia
+ * Use: Attach script to the walls or other gameObjects in Scene
+*/
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 

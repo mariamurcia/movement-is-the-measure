@@ -1,4 +1,11 @@
-﻿using System.Collections;
+﻿/*
+ * ShatterController.cs
+ * Converts wall into a wall made of prototype gameObjects. Activates physics properties of each prototype gameObject when a given avatarComponent is within a certain threshould distance from the wall or gameObject that it is attached to.
+ * Author: Sebastian Friston, Maria Murcia
+ * Use: Attach script to the walls or other gameObjects in Scene
+*/
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,15 +27,14 @@ public class ShatterController : MonoBehaviour {
 	
 	void Update () {
         if ((avatarComponent.transform.position - Physics.ClosestPoint(avatarComponent.transform.position, this.GetComponent<Collider>(), this.transform.position, this.transform.rotation)).magnitude < threshold) {
-            foreach(Transform child in brickHolder.transform)
-            {
+            foreach(Transform child in brickHolder.transform) {
                 child.gameObject.GetComponent<Rigidbody>().isKinematic = false;
-                child.gameObject.AddComponent<SelfDestruct>().LifeTime = brickLifeTime;
+                child.gameObject.AddComponent<SelfDestruct>().lifeTime = brickLifeTime;
             }
         }
     }
 
-    void makeWall() {
+    void makeWall() { // Function to convert a wall into a wall made of prototype gameObjects
         brickHolder = new GameObject(this.name + "brickHolder");
         var brickWidth = prototypeBrick.transform.lossyScale.x;
         var brickHeight = prototypeBrick.transform.lossyScale.y;
@@ -44,11 +50,8 @@ public class ShatterController : MonoBehaviour {
         currentposition.x = brickXStart;
         currentposition.y = brickYStart;
 
-
-        for (int y = 0; y < brickYcount; y++)
-        {
-            for (int x = 0; x < brickXcount; x++)
-            {
+        for (int y = 0; y < brickYcount; y++) {
+            for (int x = 0; x < brickXcount; x++) {
                 var clone = Instantiate(prototypeBrick, brickHolder.transform);
                 clone.transform.localPosition = currentposition;
                 clone.GetComponent<MeshRenderer>().material.color = Random.ColorHSV(hueMin, hueMax);
@@ -57,7 +60,5 @@ public class ShatterController : MonoBehaviour {
             currentposition.y += brickHeight + distanceBetweeenBricks;
             currentposition.x = brickXStart;
         }
-
-        
     }
 }
